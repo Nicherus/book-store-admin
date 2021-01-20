@@ -14,6 +14,8 @@ import {
     SelectInput,
     SimpleForm,
     TextInput,
+    ImageInput,
+    NumberInput,
     Filter,
 } from 'admin-on-rest';
 
@@ -21,11 +23,17 @@ export const ProductList = (props) => (
     <List filters={<ProductFilter />} {...props}>
         <Datagrid>
             <TextField source="id" />
-            <ReferenceField label="User" source="userId" reference="users">
+            <ReferenceField label="Categorias" source="id" reference="categories">
                 <TextField source="name" />
             </ReferenceField>
-            <TextField source="title" />
-            <TextField source="body" />
+            <TextInput label="Autor" source="author" />
+            <TextInput label="Sinopse" source="synopsis" />
+            <TextInput label="Estoque" source="amountStock" />
+            <TextInput label="Páginas" source="pages" />
+            <TextInput label="Ano" source="year" />
+            <TextInput label="Preço" source="price" />
+            <TextInput label="Fotos" source="photos" /> 
+            {/* FAZER CAMPO REFERENCIA EM FOTOS */}
             <EditButton />
         </Datagrid>
     </List>
@@ -42,8 +50,13 @@ export const ProductEdit = (props) => (
             <ReferenceInput label="User" source="userId" reference="users" validate={required}>
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
+            <TextInput label="Autor" source="author" />
+            <NumberInput label="Estoque" source="amountStock" />
+            <NumberInput label="Páginas" source="pages" />
+            <NumberInput label="Ano" source="year" />
+            <NumberInput label="Preço" source="price" />
+            <ImageInput label="Fotos" source="photos" /> 
+            <LongTextInput label="Sinopse" source="synpsis" />
         </SimpleForm>
     </Edit>
 );
@@ -51,7 +64,7 @@ export const ProductEdit = (props) => (
 export const ProductCreate = (props) => (
     <Create {...props}>
         <SimpleForm>
-            <ReferenceInput label="User" source="userId" reference="users" validate={required} allowEmpty>
+            <ReferenceInput label="Categorias" source="id" reference="categories" validate={required} allowEmpty>
                 <SelectInput optionText="name" />
             </ReferenceInput>
             <TextInput source="title" />
