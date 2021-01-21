@@ -17,12 +17,12 @@ const App = () => (
     <Admin 
         dashboard={Dashboard} 
         authClient={authClient}
-        restClient={jsonServerRestClient('http://localhost:3000')}
+        restClient={jsonServerRestClient('http://localhost:3001')}
     >
         <Resource name="categories" list={CategoryList} edit={CategoryEdit} create={CategoryCreate} remove={Delete} icon={CategoryIcon}/>
-        <Resource name="products" list={ProductList} edit={ProductEdit} create={ProductCreate} remove={Delete} icon={ProductIcon}/>
+        {/* <Resource name="products" list={ProductList} edit={ProductEdit} create={ProductCreate} remove={Delete} icon={ProductIcon}/>
         <Resource name="clients" list={ClientList} icon={ClientIcon}/>
-        <Resource name="orders" list={OrderList} icon={OrderIcon}/>
+        <Resource name="orders" list={OrderList} icon={OrderIcon}/> */}
     </Admin>
 );
 
