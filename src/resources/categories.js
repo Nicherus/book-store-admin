@@ -25,7 +25,7 @@ export const CategoryList = (props) => (
 );
 
 const CategoryTitle = ({ record }) => {
-    return <span>Category {record ? `"${record.title}"` : ''}</span>;
+    return <span>Category {record ? `"${record.name}"` : ''}</span>;
 };
 
 export const CategoryCreate = (props) => (

@@ -11,30 +11,50 @@ import {
     LongTextInput,
     ReferenceInput,
     required,
+    Show,
     SelectInput,
     SimpleForm,
     TextInput,
     ImageInput,
     NumberInput,
     Filter,
+    ChipField,
+    SingleFieldList,
+    ReferenceArrayField,
+    ReferenceManyField,
+    SimpleShowLayout,
+    DateField,
+    ImageField,
+    ArrayField,
 } from 'admin-on-rest';
 
 export const ProductList = (props) => (
-    <List filters={<ProductFilter />} {...props}>
+    <List {...props}>
         <Datagrid>
             <TextField source="id" />
-            <ReferenceField label="Categorias" source="id" reference="categories">
-                <TextField source="name" />
-            </ReferenceField>
-            <TextInput label="Autor" source="author" />
-            <TextInput label="Sinopse" source="synopsis" />
-            <TextInput label="Estoque" source="amountStock" />
-            <TextInput label="Páginas" source="pages" />
-            <TextInput label="Ano" source="year" />
-            <TextInput label="Preço" source="price" />
-            <TextInput label="Fotos" source="photos" /> 
-            {/* FAZER CAMPO REFERENCIA EM FOTOS */}
-            <EditButton />
+            
+            <ImageField label="Fotos" source="photos.id" src="photo" />
+            
+            <ReferenceManyField label="Categorias" reference="categories" target="products.id">
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceManyField>
+            
+            <TextField label="Nome" source="name" />
+            <TextField label="Preço" source="price" />
+            <TextField label="Autor" source="author" />
+            <TextField label="Ano" source="year" />
+            <TextField label="Sinopse" source="synopsis" />
+            <TextField label="Páginas" source="pages" />
+            <TextField label="Estoque" source="amountStock" />
+            <DateField label="Criado em" source="createdAt" />
+            <DateField label="Atualizado em" source="updatedAt" />
+
+            {/* <TextInput label="Preço" source="price" />
+            <TextInput label="Fotos" source="photos" />  */}
+
+            {/* <EditButton /> */}
         </Datagrid>
     </List>
 );
@@ -73,11 +93,33 @@ export const ProductCreate = (props) => (
     </Create>
 );
 
-const ProductFilter = (props) => (
-    <Filter {...props}>
-        <TextInput label="Search" source="q" alwaysOn />
-        <ReferenceInput label="User" source="userId" reference="users">
-            <SelectInput optionText="name" />
-        </ReferenceInput>
-    </Filter>
-);
+export const ProductShow = (props) => {
+    return (
+    <Show {...props}>
+        <SimpleShowLayout>
+            <TextField source="id" />
+            <TextField label="Nome" source="name" />
+            <TextField label="Preço" source="price" />
+            <TextField label="Autor" source="author" />
+            <TextField label="Ano" source="year" />
+            <TextField label="Sinopse" source="synopsis" />
+            <TextField label="Páginas" source="pages" />
+            <TextField label="Estoque" source="amountStock" />
+            <DateField label="Criado em" source="createdAt" />
+            <DateField label="Atualizado em" source="updatedAt" />
+            
+            <ReferenceManyField label="Categorias" reference="categories" target="categories.id">
+                <SingleFieldList>
+                <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceManyField>
+
+            <ImageField label="Fotos" source="photos.id" src="photo" />
+
+            {/* <TextField label="Preço" source="price" />
+            <TextInput label="Fotos" source="photos" />  */}
+
+        </SimpleShowLayout>
+    </Show>
+    );
+}

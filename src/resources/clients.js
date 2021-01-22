@@ -6,6 +6,7 @@ import {
     EmailField, 
     EditButton,
     DateField,
+    ReferenceField,
 } from 'admin-on-rest';
 
 export const ClientList = (props) => (
@@ -14,17 +15,39 @@ export const ClientList = (props) => (
             <TextField source="id" />
             <TextField label="Nome" source="name" />
             <EmailField label="E-mail" source="email" />
-            <TextField label="CPF" source="cpf" />
             <TextField label="Meio de Pagamento" source="creditCard" />
-            <TextField label="CEP" source="cep" />
-            <TextField label="Estado" source="state" />
-            <TextField label="Cidade" source="city" />
-            <TextField label="Bairro" source="neighborhood" />
-            <TextField label="Rua" source="street" />
-            <TextField label="Número (endereço)" source="number" />
-            <TextField label="Complemento" source="complement" />
+            <TextField  label="CPF" source="cpf" />
+            
+            <ReferenceField linkType="hide" label="CEP" source="addressId" reference="addresses">
+                <TextField  source="cep" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Estado" source="addressId" reference="addresses">
+                <TextField source="state" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Cidade" source="addressId" reference="addresses">
+                <TextField source="city" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Bairro" source="addressId" reference="addresses">
+                <TextField source="neighborhood" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Rua" source="addressId" reference="addresses">
+                <TextField source="street" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Número" source="addressId" reference="addresses">
+                <TextField source="number" />
+            </ReferenceField>
+
+            <ReferenceField linkType="hide" label="Complemento" source="addressId" reference="addresses">
+                <TextField source="complement" />
+            </ReferenceField>
+
             <DateField label="Criado em" source="createdAt" />
-            <EditButton />
+            <DateField label="Atualizado em" source="updatedAt" />
         </Datagrid>
     </List>
 );
