@@ -1,9 +1,8 @@
 import React from 'react';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader} from 'material-ui/Card';
 
 export default () => (
     <Card style={{ margin: '2em' }}>
-        <CardHeader title="Welcome to the administration" />
-        <CardText>Lorem ipsum sic dolor amet...</CardText>
+        <CardHeader title="Bem-vindo ao painel ADM da [book]-STORE" />
     </Card>
 );
