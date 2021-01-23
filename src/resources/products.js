@@ -26,6 +26,12 @@ import {
     DateField,
     ImageField,
     ArrayField,
+    ArrayInput,
+    ReferenceArrayInput,
+    AutocompleteArrayInput,
+    SimpleFormIterator,
+    SelectArrayInput,
+    ShowButton,
 } from 'admin-on-rest';
 
 export const ProductList = (props) => (
@@ -33,13 +39,17 @@ export const ProductList = (props) => (
         <Datagrid>
             <TextField source="id" />
             
-            <ImageField label="Fotos" source="photos.id" src="photo" />
+            <ReferenceArrayField label="Imagens" source="photosIds" reference="photos">
+                <SingleFieldList>
+                    <ImageField source="link" />
+                </SingleFieldList>
+            </ReferenceArrayField>
             
-            <ReferenceManyField label="Categorias" reference="categories" target="products.id">
+            <ReferenceArrayField label="Categorias" source="categories" reference="categories">
                 <SingleFieldList>
                     <ChipField source="name" />
                 </SingleFieldList>
-            </ReferenceManyField>
+            </ReferenceArrayField>
             
             <TextField label="Nome" source="name" />
             <TextField label="Preço" source="price" />
@@ -48,56 +58,89 @@ export const ProductList = (props) => (
             <TextField label="Sinopse" source="synopsis" />
             <TextField label="Páginas" source="pages" />
             <TextField label="Estoque" source="amountStock" />
-            <DateField label="Criado em" source="createdAt" />
-            <DateField label="Atualizado em" source="updatedAt" />
 
-            {/* <TextInput label="Preço" source="price" />
-            <TextInput label="Fotos" source="photos" />  */}
-
-            {/* <EditButton /> */}
+            <ShowButton />
+            <EditButton />
         </Datagrid>
     </List>
 );
 
 const ProductTitle = ({ record }) => {
-    return <span>Product {record ? `"${record.title}"` : ''}</span>;
+    return <span>Product {record ? `"${record.name}"` : ''}</span>;
 };
+
+export const ProductCreate = (props) => (
+    <Create {...props}>
+        <SimpleForm>
+
+            {/* <ArrayInput source="photosIds">
+                <SimpleFormIterator>
+                    <TextInput label="link" />
+                </SimpleFormIterator>
+            </ArrayInput> */}
+            
+            <ReferenceInput label="Categorias" source="categories" reference="categories">
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            
+            <TextInput label="Nome" source="name" />
+            <NumberInput label="Preço" source="price" />
+            <TextInput label="Autor" source="author" />
+            <NumberInput label="Ano" source="year" />
+            <LongTextInput label="Sinopse" source="synopsis" />
+            <NumberInput label="Páginas" source="pages" />
+            <NumberInput label="Estoque" source="amountStock" />
+
+        </SimpleForm>
+    </Create>
+);
 
 export const ProductEdit = (props) => (
     <Edit title={<ProductTitle />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
-            <ReferenceInput label="User" source="userId" reference="users" validate={required}>
+{/*             
+            <ArrayInput source="photos">
+                <SimpleFormIterator>
+                    <TextInput label="Link da foto" />
+                </SimpleFormIterator>
+            </ArrayInput> */}
+            
+            <ReferenceInput label="Categorias" source="categories" reference="categories">
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <TextInput label="Autor" source="author" />
-            <NumberInput label="Estoque" source="amountStock" />
-            <NumberInput label="Páginas" source="pages" />
-            <NumberInput label="Ano" source="year" />
+            
+            <TextInput label="Nome" source="name" />
             <NumberInput label="Preço" source="price" />
-            <ImageInput label="Fotos" source="photos" /> 
-            <LongTextInput label="Sinopse" source="synpsis" />
+            <TextInput label="Autor" source="author" />
+            <NumberInput label="Ano" source="year" />
+            <LongTextInput label="Sinopse" source="synopsis" />
+            <NumberInput label="Páginas" source="pages" />
+            <NumberInput label="Estoque" source="amountStock" />
+
         </SimpleForm>
     </Edit>
 );
 
-export const ProductCreate = (props) => (
-    <Create {...props}>
-        <SimpleForm>
-            <ReferenceInput label="Categorias" source="id" reference="categories" validate={required} allowEmpty>
-                <SelectInput optionText="name" />
-            </ReferenceInput>
-            <TextInput source="title" />
-            <LongTextInput source="body" />
-        </SimpleForm>
-    </Create>
-);
 
 export const ProductShow = (props) => {
     return (
     <Show {...props}>
         <SimpleShowLayout>
             <TextField source="id" />
+            
+            <ReferenceArrayField label="Imagens" source="photos" reference="photos">
+                <SingleFieldList>
+                    <ImageField source="link" />
+                </SingleFieldList>
+            </ReferenceArrayField>
+            
+            <ReferenceArrayField label="Categorias" source="categories" reference="categories">
+                <SingleFieldList>
+                    <ChipField source="name" />
+                </SingleFieldList>
+            </ReferenceArrayField>
+            
             <TextField label="Nome" source="name" />
             <TextField label="Preço" source="price" />
             <TextField label="Autor" source="author" />
@@ -105,19 +148,6 @@ export const ProductShow = (props) => {
             <TextField label="Sinopse" source="synopsis" />
             <TextField label="Páginas" source="pages" />
             <TextField label="Estoque" source="amountStock" />
-            <DateField label="Criado em" source="createdAt" />
-            <DateField label="Atualizado em" source="updatedAt" />
-            
-            <ReferenceManyField label="Categorias" reference="categories" target="categories.id">
-                <SingleFieldList>
-                <ChipField source="name" />
-                </SingleFieldList>
-            </ReferenceManyField>
-
-            <ImageField label="Fotos" source="photos.id" src="photo" />
-
-            {/* <TextField label="Preço" source="price" />
-            <TextInput label="Fotos" source="photos" />  */}
 
         </SimpleShowLayout>
     </Show>
